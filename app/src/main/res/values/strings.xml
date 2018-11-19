@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Android Dev Peru</string>
+    <string name="question_current_step">Pregunta %d de %d</string>
+</resources>
