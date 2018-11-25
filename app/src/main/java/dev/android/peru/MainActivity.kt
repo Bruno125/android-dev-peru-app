@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import dev.android.peru.modules.meetup.detail.MeetupDetailFragment
-import dev.android.peru.modules.search.markAttendance.MarkAttendanceFragment
+import dev.android.peru.modules.meetup.markAttendance.MarkAttendanceFragment
 
 class MainActivity : AppCompatActivity(), MeetupDetailFragment.Owner {
 

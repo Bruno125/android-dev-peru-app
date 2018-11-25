@@ -57,7 +57,6 @@ open class SearchUserFragment : Fragment(), AttendanceAdapter.Callback {
             override fun onQueryTextChange(p0: String?): Boolean {
                 return true
             }
-
         })
     }
 

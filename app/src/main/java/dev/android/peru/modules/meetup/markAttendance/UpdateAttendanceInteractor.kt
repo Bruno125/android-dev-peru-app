@@ -1,4 +1,4 @@
-package dev.android.peru.modules.search.markAttendance
+package dev.android.peru.modules.meetup.markAttendance
 
 import dev.android.peru.data.Injection
 import dev.android.peru.data.repositories.AttendanceRepo

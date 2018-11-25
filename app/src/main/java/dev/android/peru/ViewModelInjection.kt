@@ -8,7 +8,7 @@ import androidx.fragment.app.FragmentActivity
 import dev.android.peru.modules.meetup.detail.MeetupDetailViewModel
 import dev.android.peru.modules.questionnaire.QuestionnaireViewModel
 import dev.android.peru.modules.search.SearchUserViewModel
-import dev.android.peru.modules.search.markAttendance.MarkAttendanceViewModel
+import dev.android.peru.modules.meetup.markAttendance.MarkAttendanceViewModel
 
 
 object ViewModelInjection: ViewModelProvider.Factory {
