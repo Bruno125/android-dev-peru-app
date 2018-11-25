@@ -1,12 +1,13 @@
 package dev.android.peru.modules.questionnaire
 
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.recyclerview.widget.RecyclerView
 import dev.android.peru.R
 import kotlinx.android.synthetic.main.row_question_choice.view.*
-import peru.android.dev.androidutils.updateVisibility
 import peru.android.dev.androidutils.inflate
 import peru.android.dev.datamodel.Choice
 import peru.android.dev.datamodel.Question
@@ -17,6 +18,7 @@ class QuestionnaireAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var data: Question? by Delegates.observable<Question?>(initialValue = null, onChange = { _, _, _ ->
         setupRows(data)
+        notifyDataSetChanged()
     })
 
     private var rows: List<Row> = listOf()
@@ -24,15 +26,15 @@ class QuestionnaireAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private enum class RowTypes { Text, Numeric, SelectableChoice }
 
     private sealed class Row(val type: RowTypes) {
-        class Text(val input: String): Row(RowTypes.Text)
-        class Numeric(val input: Int?): Row(RowTypes.Numeric)
+        object Text: Row(RowTypes.Text)
+        object Numeric: Row(RowTypes.Numeric)
         class SelectableChoice(val choice: Choice): Row(RowTypes.SelectableChoice)
     }
 
     private fun setupRows(question: Question?) {
         rows = when(question) {
-            is Question.Text -> listOf(Row.Text(question.input))
-            is Question.Numeric -> listOf(Row.Numeric(question.input))
+            is Question.Text -> listOf(Row.Text)
+            is Question.Numeric -> listOf(Row.Numeric)
             is Question.SingleChoice -> question.choices.map { Row.SelectableChoice(it) }
             is Question.MultiChoice -> question.choices.map { Row.SelectableChoice(it) }
             null -> emptyList()
@@ -59,9 +61,9 @@ class QuestionnaireAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val row: Row = rows[position]
         when(holder) {
-            is TextQuestionViewHolder -> holder.bind(row as Row.Text)
-            is NumericQuestionViewHolder -> holder.bind(row as Row.Numeric)
-            is SelectableChoiceViewHolder -> holder.bind(row as Row.SelectableChoice)
+            is TextQuestionViewHolder -> holder.bind(data as Question.Text)
+            is NumericQuestionViewHolder -> holder.bind(data as Question.Numeric)
+            is SelectableChoiceViewHolder -> holder.bind(data = row as Row.SelectableChoice, question = data)
             else -> throw IllegalArgumentException("Invalid ViewHolder $holder for QuestionnaireAdapter")
         }
     }
@@ -74,8 +76,17 @@ class QuestionnaireAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             }
         }
 
-        fun bind(data: Row.Text) {
-            (itemView as EditText).setText(data.input)
+        fun bind(question: Question.Text) {
+            (itemView as EditText).setText(question.input)
+            (itemView as EditText).addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {}
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    question.input = p0?.toString() ?: ""
+                }
+            })
         }
     }
 
@@ -87,8 +98,17 @@ class QuestionnaireAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             }
         }
 
-        fun bind(data: Row.Numeric) {
-            (itemView as EditText).setText(data.input?.toString())
+        fun bind(question: Question.Numeric) {
+            (itemView as EditText).setText(question.input?.toString())
+            (itemView as EditText).addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {}
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    question.input = p0?.toString()?.toIntOrNull()
+                }
+            })
         }
     }
 
@@ -103,17 +123,25 @@ class QuestionnaireAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         private val labelTextView = itemView.choiceLabelTextView
         private val selectedImageView = itemView.choiceSelectedImageView
 
-        fun bind(data: Row.SelectableChoice) {
+        fun bind(data: Row.SelectableChoice, question: Question?) {
             with(data.choice) {
                 labelTextView.text = label
-
+                selectedImageView.updateVisibility(isSelected)
                 itemView.setOnClickListener {
                     isSelected = !isSelected
                     selectedImageView.updateVisibility(isSelected)
                 }
-
-                selectedImageView.updateVisibility(isSelected)
             }
+        }
+
+        private fun Question.update(choice: Choice) = when(this) {
+            is Question.SingleChoice -> {
+                choices.forEach { it.isSelected = (it.id == choice.id) }
+            }
+            is Question.MultiChoice -> {
+                choices.find { it.id == choice.id }?.isSelected = choice.isSelected
+            }
+            else -> { /* do nothing */ }
         }
 
     }

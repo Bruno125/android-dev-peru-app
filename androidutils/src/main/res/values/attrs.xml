@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <declare-styleable name="DottedProgressBar">
+        <attr name="dotCount" format="integer"/>
+        <attr name="contentAlignment" format="enum">
+            <enum name="left" value="0"/>
+            <enum name="center" value="1"/>
+            <enum name="right" value="2"/>
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="StepperFooter">
+        <attr name="totalSteps" format="integer"/>
+        <attr name="currentStep" format="integer"/>
+    </declare-styleable>
+
+    <declare-styleable name="ColorableProgressBar">
+        <attr name="progressCompat" format="integer"/>
+    </declare-styleable>
+
+</resources>

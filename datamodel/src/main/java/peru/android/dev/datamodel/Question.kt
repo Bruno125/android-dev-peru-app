@@ -30,6 +30,8 @@ sealed class Question: IQuestion {
             val number = input
             return if(number == null) null else Answer.NumericAnswer(number)
         }
+
+        fun isBetweenBounds(answer: Answer.NumericAnswer) = answer.value in min..max
     }
 
     data class SingleChoice(override val id: String,

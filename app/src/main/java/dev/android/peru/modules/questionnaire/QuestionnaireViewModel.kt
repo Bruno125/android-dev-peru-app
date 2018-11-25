@@ -1,6 +1,7 @@
 package dev.android.peru.modules.questionnaire
 
 import androidx.lifecycle.*
+import dev.android.peru.R
 import dev.android.peru.modules.questionnaire.QuestionnaireUiState.*
 import peru.android.dev.datamodel.Choice
 import peru.android.dev.datamodel.Question
@@ -15,6 +16,10 @@ class QuestionnaireViewModel : ViewModel(), LifecycleObserver {
     val state: LiveData<QuestionnaireUiState>
         get() = _state
 
+    private val _error = MutableLiveData<Int>()
+    val error: LiveData<Int>
+        get() = _error
+
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun onCreate() {
         _state.value = Loading
@@ -22,7 +27,16 @@ class QuestionnaireViewModel : ViewModel(), LifecycleObserver {
     }
 
     fun onNextClicked(question: Question) {
-
+        if(question.isAnswerValid()) {
+            currentIndex += 1
+            update()
+        } else {
+            _error.value = R.string.please_answer_question
+        }
+    }
+    fun onPreviousClicked(question: Question) {
+        currentIndex -= 1
+        update()
     }
 
     private fun loadQuestionnaire() { //TODO
@@ -42,6 +56,8 @@ class QuestionnaireViewModel : ViewModel(), LifecycleObserver {
         ))
         update()
     }
+
+    private fun Question.isAnswerValid() = ValidateAnswer().execute(this)
 
     private fun update() {
         _state.value = InProgress(

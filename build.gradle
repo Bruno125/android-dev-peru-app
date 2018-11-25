@@ -38,6 +38,7 @@ ext {
             okhttp              : "3.8.0",
             okhttp              : "3.8.0",
             lifecycle           : "1.1.1",
+            constraint_layout   : "2.0.0-alpha2",
 
             mockito_kotlin      : "1.6.0",
             kluent              : "1.33"
@@ -53,6 +54,7 @@ ext {
             retrofit_gson       : "com.squareup.retrofit2:converter-gson:${versions.retrofit}",
             okhttp_interceptor  : "com.squareup.okhttp3:logging-interceptor:${versions.okhttp}",
             lifecycle           : "android.arch.lifecycle:extensions:${versions.lifecycle}",
+            constraint_layout   : "androidx.constraintlayout:constraintlayout:${versions.constraint_layout}",
 
             kluent              : "org.amshove.kluent:kluent:${versions.kluent}",
             mockito_kotlin      : "com.nhaarman:mockito-kotlin:${versions.mockito_kotlin}",
