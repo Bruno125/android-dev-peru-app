@@ -52,7 +52,8 @@ class QuestionnaireViewModel(
     }
 
     private fun loadQuestionnaire() = execute {
-        val result = repo.getQuestionnaireForMeetup("wzJ9vGOmfO1vUDDs9qi6")
+        val meetups = Injection.meetupsRepo.getMeetups()
+        val result = repo.getQuestionnaireForMeetup(meetups.first().id)
         if(result == null) {
             _error.value = R.string.question_current_step
             return@execute

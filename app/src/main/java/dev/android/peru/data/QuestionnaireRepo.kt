@@ -15,8 +15,8 @@ class FirebaseQuestionnaireRepo(): QuestionnaireRepo, FirebaseRepo {
     override suspend fun getQuestionnaireForMeetup(meetupId: String): Questionnaire? {
         return suspendCoroutine { cont ->
             readDocument(path = "meetups/$meetupId", onSuccess = {
-                val data = it?.data ?: emptyMap()
-                cont.resume(FirebaseParser.toMeetupObject(data)?.questionnaire)
+                val meetup = FirebaseParser.toMeetupObject(meetupId, data = it?.data ?: emptyMap())
+                cont.resume(meetup?.questionnaire)
             })
         }
     }

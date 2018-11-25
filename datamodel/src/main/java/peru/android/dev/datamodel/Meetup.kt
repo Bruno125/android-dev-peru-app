@@ -1,6 +1,7 @@
 package peru.android.dev.datamodel
 
-class Meetup @JvmOverloads constructor(
+data class Meetup @JvmOverloads constructor(
+        val id: String = "",
         val name: String = "",
         val description: String = "",
         val location: MeetupLocation? = null,

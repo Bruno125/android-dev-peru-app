@@ -6,13 +6,13 @@ import peru.android.dev.datamodel.Meetup
 
 object FirebaseParser {
 
-    fun toMeetupObject(map: Map<String, Any>): Meetup? {
-        val gson = Gson()
-        return Gson().fromJson(gson.toJson(map), Meetup::class.java)
+    val gson by lazy { Gson() }
+
+    fun toMeetupObject(meetupId: String, data: Map<String, Any>): Meetup? {
+        return Gson().fromJson(gson.toJson(data), Meetup::class.java).copy(id = meetupId)
     }
 
     fun toAttendance(data: List<Map<String, Any>>): List<Attendance> {
-        val gson = Gson()
         return data.mapNotNull { gson.fromJson(gson.toJson(it), Attendance::class.java) }
     }
 
