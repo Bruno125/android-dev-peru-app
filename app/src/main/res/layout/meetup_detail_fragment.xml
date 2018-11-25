@@ -8,15 +8,6 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"/>
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -80,5 +71,12 @@
 
     </ScrollView>
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/meetupDetailToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme" />
 
 </RelativeLayout>
