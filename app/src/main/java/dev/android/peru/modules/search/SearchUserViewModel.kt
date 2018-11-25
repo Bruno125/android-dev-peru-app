@@ -21,31 +21,45 @@ class SearchUserViewModel(
     private val viewModelJob = Job()
     private val uiScope = CoroutineScope(dispatcher.main + viewModelJob)
 
-    private lateinit var attendance: List<Attendance>
+    private lateinit var allResults: List<Attendance>
+    private lateinit var filteredResults: List<Attendance>
 
     private val _state = MutableLiveData<SearchUserUiState>()
     val state: LiveData<SearchUserUiState>
         get() = _state
 
     fun search(query: String) = execute {
-        val results = if(query.toIntOrNull() != null) {
-            attendance.filter { it.id == query }
+        filteredResults = if(query.toIntOrNull() != null) {
+            allResults.filter { it.id == query }
         } else {
-            attendance.filter { it.name.contains(query) }
+            allResults.filter { it.name.contains(query) }
         }
-        _state.postValue(when{
-            results.isEmpty() -> NoResults
-            else -> DisplayResults(results)
-        })
+        updateContent()
     }
 
     fun loadMeetup(meetupId: String) = execute {
-        if(::attendance.isInitialized) return@execute
+        if(::allResults.isInitialized) return@execute
 
         _state.postValue(Loading)
-        attendance = repo.getAttendance(meetupId)
+        allResults = repo.getAttendance(meetupId)
         _state.postValue(PleaseSearch)
     }
+
+    fun update(entry: Attendance) {
+        allResults = allResults.replace(entry)
+        filteredResults = filteredResults.replace(entry)
+        updateContent()
+    }
+
+    private fun updateContent() {
+        _state.postValue(when{
+            filteredResults.isEmpty() -> NoResults
+            else -> DisplayResults(filteredResults)
+        })
+    }
+
+    private fun List<Attendance>.replace(entry: Attendance) =
+            map { if(it.id == entry.id) entry else it }
 
     private fun execute(predicate: suspend ()->Unit) = uiScope.launch { predicate() }
 }

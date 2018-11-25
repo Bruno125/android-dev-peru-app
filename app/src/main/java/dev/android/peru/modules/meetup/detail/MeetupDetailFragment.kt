@@ -1,28 +1,34 @@
 package dev.android.peru.modules.meetup.detail
 
+import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-
 import dev.android.peru.R
+import dev.android.peru.modules.meetup.detail.MeetupUiState.Detail
+import dev.android.peru.modules.meetup.detail.MeetupUiState.Loading
 import dev.android.peru.provide
-import peru.android.dev.baseutils.exhaustive
-import dev.android.peru.modules.meetup.detail.MeetupUiState.*
 import kotlinx.android.synthetic.main.meetup_detail_fragment.*
 import peru.android.dev.androidutils.load
-import peru.android.dev.androidutils.toast
+import peru.android.dev.baseutils.exhaustive
 import peru.android.dev.datamodel.Meetup
 
 class MeetupDetailFragment : Fragment() {
+
+    interface Owner {
+        fun openMarkAttendance(meetupId: String)
+        fun openRequestFeedback(meetupId: String)
+    }
 
     companion object {
         fun newInstance() = MeetupDetailFragment()
     }
 
+    private lateinit var owner: Owner
     private lateinit var viewModel: MeetupDetailViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -55,19 +61,20 @@ class MeetupDetailFragment : Fragment() {
         meetupTitleTextView.text = meetup.name
         meetupDescriptionTextView.text = meetup.description
         meetupCoverImageView.load(meetup.cover)
+
+        meetupDetailToolbar.setOnMenuItemClickListener { item ->
+            when(item.itemId) {
+                R.id.menu_start_attendance -> { owner.openMarkAttendance(meetup.id) }
+                R.id.menu_start_questionnaire -> { owner.openRequestFeedback(meetup.id) }
+            }
+            true
+        }
     }
 
     private fun setupToolbar() {
         with(meetupDetailToolbar) {
             navigationIcon = ContextCompat.getDrawable(context, R.drawable.ic_close_white_24dp)
             inflateMenu(R.menu.menu_meetup_detail)
-            setOnMenuItemClickListener { item ->
-                when(item.itemId) {
-                    R.id.menu_start_attendance -> {  }
-                    R.id.menu_start_questionnaire -> { }
-                }
-                true
-            }
             setNavigationOnClickListener {
                 //todo
             }
@@ -77,5 +84,10 @@ class MeetupDetailFragment : Fragment() {
     private fun loadMeetup() {
         val meetupId = "wzJ9vGOmfO1vUDDs9qi6"
         viewModel.loadMeetup(meetupId)
+    }
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        owner = context as? Owner ?: throw RuntimeException("$context must implement MeetupDetailFragment.Owner")
     }
 }

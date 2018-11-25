@@ -8,4 +8,7 @@
     <string name="start_questionnaire">Iniciar encuesta</string>
     <string name="start_attendance">Marcar asistencia</string>
 
+    <string name="attendance_registered">Asistencia registrada</string>
+    <string name="attendance_unregistered">Desasistencia registrada</string>
+
 </resources>

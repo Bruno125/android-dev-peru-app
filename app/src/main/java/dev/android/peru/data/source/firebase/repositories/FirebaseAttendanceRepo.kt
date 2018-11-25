@@ -20,4 +20,14 @@ class FirebaseAttendanceRepo: AttendanceRepo, FirebaseRepo {
             })
         }
     }
+
+    override suspend fun updateAttendance(meetupId: String, attendance: Attendance): Boolean {
+        return suspendCoroutine { continuation ->
+            val path = "meetups/$meetupId/attendance/${attendance.id}"
+            db.document(path).set(attendance)
+                    .addOnSuccessListener { continuation.resume(true) }
+                    .addOnFailureListener { continuation.resume(false) }
+                    .addOnCanceledListener { continuation.resume(false) }
+        }
+    }
 }
