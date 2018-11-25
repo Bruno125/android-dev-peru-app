@@ -43,6 +43,7 @@ ext {
             firestore           : "17.1.2",
             coroutines          : "1.0.0",
             multidex            : "1.0.3",
+            picasso             : "2.71828",
 
             mockito_kotlin      : "2.0.0",
             kluent              : "1.33"
@@ -65,6 +66,7 @@ ext {
             coroutines          : "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versions.coroutines}",
             coroutines_android  : "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.coroutines}",
             multidex            : "com.android.support:multidex:${versions.multidex}",
+            picasso             : "com.squareup.picasso:picasso:${versions.picasso}",
 
             kluent              : "org.amshove.kluent:kluent:${versions.kluent}",
             mockito_kotlin      : "com.nhaarman.mockitokotlin2:mockito-kotlin:${versions.mockito_kotlin}",

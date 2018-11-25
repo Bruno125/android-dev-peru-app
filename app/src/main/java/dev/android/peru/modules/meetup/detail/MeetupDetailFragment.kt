@@ -13,6 +13,7 @@ import dev.android.peru.provide
 import peru.android.dev.baseutils.exhaustive
 import dev.android.peru.modules.meetup.detail.MeetupUiState.*
 import kotlinx.android.synthetic.main.meetup_detail_fragment.*
+import peru.android.dev.androidutils.load
 import peru.android.dev.androidutils.toast
 import peru.android.dev.datamodel.Meetup
 
@@ -53,6 +54,7 @@ class MeetupDetailFragment : Fragment() {
     private fun display(meetup: Meetup) {
         meetupTitleTextView.text = meetup.name
         meetupDescriptionTextView.text = meetup.description
+        meetupCoverImageView.load(meetup.cover)
     }
 
     private fun setupToolbar() {
