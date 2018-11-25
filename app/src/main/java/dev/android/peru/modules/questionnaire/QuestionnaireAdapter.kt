@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import dev.android.peru.R
 import kotlinx.android.synthetic.main.row_question_choice.view.*
 import peru.android.dev.androidutils.inflate
+import peru.android.dev.androidutils.updateVisibility
 import peru.android.dev.datamodel.Choice
 import peru.android.dev.datamodel.Question
 import java.lang.IllegalArgumentException
