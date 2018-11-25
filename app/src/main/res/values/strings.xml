@@ -3,4 +3,6 @@
     <string name="question_current_step">Pregunta %d de %d</string>
     <string name="please_answer_question">Por favor responde la pregunta</string>
     <string name="error_saving_response">Ocurrió un error al guardar tus respuestas.</string>
+    <string name="error_searching_user">Usuario no encontrado</string>
+
 </resources>

@@ -38,9 +38,7 @@
         app:srcCompat="@drawable/ic_done_24dp" />
 
     <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#eee"
+        style="@style/ViewSeparator"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
