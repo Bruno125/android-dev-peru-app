@@ -12,6 +12,7 @@ import dev.android.peru.modules.questionnaire.QuestionnaireUiState.*
 import dev.android.peru.R
 import dev.android.peru.provide
 import kotlinx.android.synthetic.main.questionnaire_fragment.*
+import peru.android.dev.androidutils.toast
 import peru.android.dev.baseutils.exhaustive
 
 class QuestionnaireFragment : Fragment() {
@@ -42,6 +43,16 @@ class QuestionnaireFragment : Fragment() {
             state?.let { render(it) }
         })
 
+        viewModel.error.observe(this, Observer { error ->
+            error?.let { toast(it) }
+        })
+
+        stepperFooter.onBackListener = {
+            adapter.data?.let { viewModel.onPreviousClicked(it) }
+        }
+        stepperFooter.onNextListener = {
+            adapter.data?.let { viewModel.onNextClicked(it) }
+        }
     }
 
     private fun render(state: QuestionnaireUiState) {
@@ -56,5 +67,7 @@ class QuestionnaireFragment : Fragment() {
         adapter.data = current
         titleTextView.text = current.title
         activity?.title = getString(R.string.question_current_step, currentIndex + 1, totalQuestions)
+        stepperFooter.totalSteps = totalQuestions
+        stepperFooter.setCurrent(currentIndex, animated = false)
     }
 }

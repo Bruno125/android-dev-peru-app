@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="ms_bottom_navigation_bar_height">48dp</dimen>
+    <dimen name="ms_dotted_progress_bar_dot_size">10dp</dimen>
+    <dimen name="ms_tabs_container_lateral_padding">24dp</dimen>
+
+</resources>

@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">androidUtils</string>
+    <string name="back">Anterior</string>
+    <string name="next">Siguiente</string>
+    <string name="finish">Terminar</string>
 </resources>

@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Android Dev Peru</string>
     <string name="question_current_step">Pregunta %d de %d</string>
+    <string name="please_answer_question">Por favor responde la pregunta</string>
 </resources>

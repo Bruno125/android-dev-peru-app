@@ -35,6 +35,7 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     def lib = rootProject.library
+    implementation lib.constraint_layout
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
 }
 repositories {
