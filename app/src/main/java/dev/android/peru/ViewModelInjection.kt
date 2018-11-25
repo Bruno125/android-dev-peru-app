@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import dev.android.peru.modules.questionnaire.QuestionnaireViewModel
+import dev.android.peru.modules.search.SearchUserViewModel
 
 
 object ViewModelInjection: ViewModelProvider.Factory {
@@ -14,6 +15,8 @@ object ViewModelInjection: ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return if (modelClass.assignableFrom<QuestionnaireViewModel>()) {
             QuestionnaireViewModel() as T
+        } else if (modelClass.assignableFrom<SearchUserViewModel>()) {
+            SearchUserViewModel() as T
         } else {
             throw RuntimeException("Unsupported ViewModel")
         }

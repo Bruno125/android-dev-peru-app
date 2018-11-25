@@ -6,4 +6,6 @@
 
     <color name="textColor">#333</color>
     <color name="textContrast">#fff</color>
+
+    <color name="separatorColor">#bbb</color>
 </resources>
