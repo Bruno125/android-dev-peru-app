@@ -8,12 +8,13 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "dev.android.peru"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -39,5 +40,13 @@ dependencies {
 
     def lib = rootProject.library
     implementation lib.constraint_layout
+    implementation lib.firebase_core
+    implementation lib.firestore
+    implementation lib.coroutines
+    implementation lib.coroutines_android
+    implementation lib.multidex
+    implementation lib.gson
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
 }
+
+apply plugin: 'com.google.gms.google-services'

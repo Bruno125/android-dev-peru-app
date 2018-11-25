@@ -9,7 +9,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.2.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-
+        classpath 'com.google.gms:google-services:4.0.1'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -39,12 +39,17 @@ ext {
             okhttp              : "3.8.0",
             lifecycle           : "1.1.1",
             constraint_layout   : "2.0.0-alpha2",
+            firebase            : "16.0.4",
+            firestore           : "17.1.2",
+            coroutines          : "1.0.0",
+            multidex            : "1.0.3",
 
-            mockito_kotlin      : "1.6.0",
+            mockito_kotlin      : "2.0.0",
             kluent              : "1.33"
     ]
 
     library = [
+            kotlin              : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version",
             gson                : "com.google.code.gson:gson:${versions.gson}",
             rxjava              : "io.reactivex.rxjava2:rxjava:${versions.rxjava}",
             rxandroid           : "io.reactivex.rxjava2:rxandroid:${versions.rxandroid}",
@@ -55,9 +60,14 @@ ext {
             okhttp_interceptor  : "com.squareup.okhttp3:logging-interceptor:${versions.okhttp}",
             lifecycle           : "android.arch.lifecycle:extensions:${versions.lifecycle}",
             constraint_layout   : "androidx.constraintlayout:constraintlayout:${versions.constraint_layout}",
+            firebase_core       : "com.google.firebase:firebase-core:${versions.firebase}",
+            firestore           : "com.google.firebase:firebase-firestore:${versions.firestore}",
+            coroutines          : "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versions.coroutines}",
+            coroutines_android  : "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.coroutines}",
+            multidex            : "com.android.support:multidex:${versions.multidex}",
 
             kluent              : "org.amshove.kluent:kluent:${versions.kluent}",
-            mockito_kotlin      : "com.nhaarman:mockito-kotlin:${versions.mockito_kotlin}",
+            mockito_kotlin      : "com.nhaarman.mockitokotlin2:mockito-kotlin:${versions.mockito_kotlin}",
             arch_testing        : "android.arch.core:core-testing:${versions.lifecycle}",
     ]
 }
