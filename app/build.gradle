@@ -39,5 +39,9 @@ dependencies {
 
     def lib = rootProject.library
     implementation lib.constraint_layout
+    implementation lib.firebase_core
+    implementation lib.firestore
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
 }
+
+apply plugin: 'com.google.gms.google-services'
