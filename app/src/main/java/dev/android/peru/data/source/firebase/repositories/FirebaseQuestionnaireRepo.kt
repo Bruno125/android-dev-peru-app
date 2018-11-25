@@ -14,9 +14,23 @@ class FirebaseQuestionnaireRepo(): QuestionnaireRepo, FirebaseRepo {
         return suspendCoroutine { cont ->
             readDocument(path = "meetups/$meetupId", onSuccess = {
                 val meetup = FirebaseParser.toMeetupObject(meetupId, data = it?.data ?: emptyMap())
-                cont.resume(meetup?.questionnaire)
+                val questionnaire = meetup?.questionnaire?.copy(meetupId = meetupId)
+                cont.resume(questionnaire)
             })
         }
     }
 
+    override suspend fun saveResponse(questionnaire: Questionnaire): Boolean {
+        return suspendCoroutine {cont ->
+            val content = questionnaire.questions.associate {
+                it.id to FirebaseParser.toMapData(it)
+            }
+            val path = "meetups/${questionnaire.meetupId}/feedback"
+
+            db.collection(path).document().set(content)
+                    .addOnSuccessListener { cont.resume(true) }
+                    .addOnFailureListener { cont.resume(false) }
+                    .addOnCanceledListener { cont.resume(false) }
+        }
+    }
 }

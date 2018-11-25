@@ -24,4 +24,7 @@ class MockQuestionnaireRepo: QuestionnaireRepo {
         ))
     }
 
+    override suspend fun saveResponse(questionnaire: Questionnaire): Boolean {
+        return true
+    }
 }

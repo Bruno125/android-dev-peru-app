@@ -53,6 +53,9 @@ class QuestionnaireFragment : Fragment() {
         stepperFooter.onNextListener = {
             adapter.data?.let { viewModel.onNextClicked(it) }
         }
+        stepperFooter.onFinishListener = {
+            viewModel.onFinishedClicked()
+        }
     }
 
     private fun render(state: QuestionnaireUiState) {
