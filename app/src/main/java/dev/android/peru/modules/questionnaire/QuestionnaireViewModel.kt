@@ -51,7 +51,7 @@ class QuestionnaireViewModel(
         update()
     }
 
-    private fun loadQuestionnaire() = execute { //TODO
+    private fun loadQuestionnaire() = execute {
         val result = repo.getQuestionnaireForMeetup("wzJ9vGOmfO1vUDDs9qi6")
         if(result == null) {
             _error.value = R.string.question_current_step

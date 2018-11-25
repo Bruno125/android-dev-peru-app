@@ -2,10 +2,27 @@ package dev.android.peru.data.firebase
 
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 
 interface FirebaseRepo {
 
     val db: FirebaseFirestore; get() = FirebaseFirestore.getInstance()
+
+    fun FirebaseRepo.readCollection(path: String,
+                                    onSuccess: (QuerySnapshot?) -> Unit,
+                                    onFailure: (Exception)->Unit = {},
+                                    onCanceled: ()->Unit = {} ) {
+        db.collection(path).get()
+                .addOnSuccessListener {
+                    onSuccess(it)
+                }
+                .addOnCanceledListener {
+                    onCanceled.invoke()
+                }
+                .addOnFailureListener {
+                    onFailure.invoke(it)
+                }
+    }
 
     fun FirebaseRepo.readDocument(path: String,
                                   onSuccess: (DocumentSnapshot?) -> Unit,
