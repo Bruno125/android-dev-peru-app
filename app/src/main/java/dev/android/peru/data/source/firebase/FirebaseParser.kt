@@ -1,4 +1,4 @@
-package dev.android.peru.data.firebase
+package dev.android.peru.data.source.firebase
 
 import com.google.gson.Gson
 import peru.android.dev.datamodel.Attendance

@@ -1,4 +1,4 @@
-package dev.android.peru.data.firebase
+package dev.android.peru.data.source.firebase
 
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore

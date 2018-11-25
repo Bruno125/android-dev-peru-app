@@ -3,7 +3,7 @@ package dev.android.peru.modules.questionnaire
 import androidx.lifecycle.*
 import dev.android.peru.R
 import dev.android.peru.data.Injection
-import dev.android.peru.data.QuestionnaireRepo
+import dev.android.peru.data.repositories.QuestionnaireRepo
 import dev.android.peru.modules.questionnaire.QuestionnaireUiState.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job

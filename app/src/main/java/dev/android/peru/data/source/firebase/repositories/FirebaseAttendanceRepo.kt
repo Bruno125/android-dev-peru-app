@@ -1,16 +1,11 @@
-package dev.android.peru.data
+package dev.android.peru.data.source.firebase.repositories
 
-import dev.android.peru.data.firebase.FirebaseParser
-import dev.android.peru.data.firebase.FirebaseRepo
+import dev.android.peru.data.repositories.AttendanceRepo
+import dev.android.peru.data.source.firebase.FirebaseParser
+import dev.android.peru.data.source.firebase.FirebaseRepo
 import peru.android.dev.datamodel.Attendance
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
-
-interface AttendanceRepo {
-
-    suspend fun getAttendance(meetupId: String): List<Attendance>
-
-}
 
 class FirebaseAttendanceRepo: AttendanceRepo, FirebaseRepo {
 
@@ -25,5 +20,4 @@ class FirebaseAttendanceRepo: AttendanceRepo, FirebaseRepo {
             })
         }
     }
-
 }
