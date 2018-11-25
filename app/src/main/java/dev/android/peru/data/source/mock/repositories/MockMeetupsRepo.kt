@@ -20,4 +20,8 @@ class MockMeetupsRepo : MeetupsRepo {
         )
     }
 
+    override suspend fun getMeetup(meetupId: String): Meetup {
+        return getMeetups().first()
+    }
+
 }

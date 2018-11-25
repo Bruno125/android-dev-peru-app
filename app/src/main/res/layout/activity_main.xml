@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <fragment android:name="dev.android.peru.modules.search.SearchUserFragment"
+    <fragment android:name="dev.android.peru.modules.meetup.detail.MeetupDetailFragment"
         android:id="@+id/headlines_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
