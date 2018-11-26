@@ -2,6 +2,7 @@ package dev.android.peru.modules.meetup.detail
 
 import android.content.Context
 import android.os.Bundle
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import dev.android.peru.modules.meetup.detail.MeetupUiState.Loading
 import dev.android.peru.provide
 import kotlinx.android.synthetic.main.meetup_detail_fragment.*
 import peru.android.dev.androidutils.load
+import peru.android.dev.androidutils.setHtml
 import peru.android.dev.baseutils.exhaustive
 import peru.android.dev.datamodel.Meetup
 
@@ -59,7 +61,7 @@ class MeetupDetailFragment : Fragment() {
 
     private fun display(meetup: Meetup) {
         meetupTitleTextView.text = meetup.name
-        meetupDescriptionTextView.text = meetup.description
+        meetupDescriptionTextView.setHtml(meetup.description)
         meetupCoverImageView.load(meetup.cover)
 
         meetupDetailToolbar.setOnMenuItemClickListener { item ->
