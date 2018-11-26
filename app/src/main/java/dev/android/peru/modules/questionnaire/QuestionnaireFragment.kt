@@ -2,15 +2,21 @@ package dev.android.peru.modules.questionnaire
 
 import android.content.Context
 import android.os.Bundle
+import android.transition.AutoTransition
+import android.transition.Transition
+import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import dev.android.peru.R
 import dev.android.peru.modules.questionnaire.QuestionnaireUiState.*
 import dev.android.peru.provide
 import kotlinx.android.synthetic.main.questionnaire_fragment.*
+import peru.android.dev.androidutils.runWithDelay
 import peru.android.dev.androidutils.toast
 import peru.android.dev.baseutils.exhaustive
 
@@ -42,7 +48,6 @@ class QuestionnaireFragment : Fragment() {
         viewModel = provide()
         viewModel.loadQuestionnaire(getMeetupId())
         bind()
-
     }
 
     private fun bind() {
@@ -74,7 +79,7 @@ class QuestionnaireFragment : Fragment() {
         when(state) {
             is Loading -> {  }
             is InProgress -> { displayCurrent(state) }
-            is Finished -> {  }
+            is Finished -> { beginFinishedAnimations() }
         }.exhaustive
     }
 
@@ -88,6 +93,46 @@ class QuestionnaireFragment : Fragment() {
         activity?.title = getString(R.string.question_current_step, currentIndex + 1, totalQuestions)
         stepperFooter.totalSteps = totalQuestions
         stepperFooter.setCurrent(currentIndex, animated = false)
+    }
+
+    private fun beginFinishedAnimations() {
+        with(questionnaireConstraintLayout) {
+            transitionTo(layoutId = R.layout.questionnaire_finished_1_fragment, onFinished = {
+                transitionTo(layoutId = R.layout.questionnaire_finished_2_fragment, onFinished = {
+                    runWithDelay(1000L) { owner.closeQuestionnaire() }
+                })
+            })
+        }
+    }
+
+    private fun ConstraintLayout.transitionTo(layoutId: Int, onFinished: ()->Unit = {}) {
+        val transition = AutoTransition().apply { addListener(object: Transition.TransitionListener {
+            override fun onTransitionEnd(p0: Transition?) {
+                onFinished()
+            }
+
+            override fun onTransitionResume(p0: Transition?) {
+
+            }
+
+            override fun onTransitionPause(p0: Transition?) {
+
+            }
+
+            override fun onTransitionCancel(p0: Transition?) {
+
+            }
+
+            override fun onTransitionStart(p0: Transition?) {
+
+            }
+
+        }) }
+        TransitionManager.beginDelayedTransition(this,transition)
+        ConstraintSet().let{
+            it.clone(this.context, layoutId)
+            it.applyTo(this)
+        }
     }
 
     override fun onAttach(context: Context?) {
