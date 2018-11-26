@@ -11,4 +11,10 @@
     <string name="attendance_registered">Asistencia registrada</string>
     <string name="attendance_unregistered">Desasistencia registrada</string>
 
+    <string name="user_has_not_registered">El usuario no ha marcado asistencia. ¿Desea continuar de todas formas?</string>
+
+    <string name="common_yes">Si</string>
+    <string name="common_no">No</string>
+    <string name="common_cancel">Cancelar</string>
+
 </resources>

@@ -16,7 +16,7 @@ import peru.android.dev.datamodel.Questionnaire
 class QuestionnaireViewModel(
         private val repo: QuestionnaireRepo = Injection.questionnaireRepo,
         dispatcher: CoroutinesDispatcherProvider = AppDispatcher.Default
-) : ViewModel(), LifecycleObserver {
+) : ViewModel() {
 
     private lateinit var questionnaire: Questionnaire
     private var currentIndex = 0
@@ -31,12 +31,6 @@ class QuestionnaireViewModel(
 
     private val viewModelJob = Job()
     private val uiScope = CoroutineScope(dispatcher.main + viewModelJob)
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-    fun onCreate() {
-        _state.value = Loading
-        loadQuestionnaire()
-    }
 
     fun onNextClicked(question: Question) {
         if(question.isAnswerValid()) {
@@ -60,9 +54,11 @@ class QuestionnaireViewModel(
         }
     }
 
-    private fun loadQuestionnaire() = execute {
-        val meetups = Injection.meetupsRepo.getMeetups()
-        val result = repo.getQuestionnaireForMeetup(meetups.first().id)
+    fun loadQuestionnaire(meetupId: String) = execute {
+        if(::questionnaire.isInitialized) return@execute
+
+        _state.value = Loading
+        val result = repo.getQuestionnaireForMeetup(meetupId)
         if(result == null) {
             _error.value = R.string.question_current_step
             return@execute

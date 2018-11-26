@@ -9,6 +9,7 @@ import dev.android.peru.modules.meetup.detail.MeetupDetailViewModel
 import dev.android.peru.modules.questionnaire.QuestionnaireViewModel
 import dev.android.peru.modules.search.SearchUserViewModel
 import dev.android.peru.modules.meetup.markAttendance.MarkAttendanceViewModel
+import dev.android.peru.modules.questionnaire.pickUser.PickQuestionnaireUserViewModel
 
 
 object ViewModelInjection: ViewModelProvider.Factory {
@@ -23,6 +24,8 @@ object ViewModelInjection: ViewModelProvider.Factory {
             MeetupDetailViewModel() as T
         } else if (modelClass.assignableFrom<MarkAttendanceViewModel>()) {
             MarkAttendanceViewModel() as T
+        } else if (modelClass.assignableFrom<PickQuestionnaireUserViewModel>()) {
+            PickQuestionnaireUserViewModel() as T
         } else {
             throw RuntimeException("Unsupported ViewModel")
         }
