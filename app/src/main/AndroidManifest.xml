@@ -16,6 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".modules.meetup.markAttendance.MarkAttendanceActivity" />
+        <activity android:name=".modules.questionnaire.pickUser.PickQuestionnaireUserActivity" />
+        <activity android:name=".modules.questionnaire.QuestionnaireActivity"></activity>
     </application>
 
 </manifest>

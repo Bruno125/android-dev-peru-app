@@ -13,9 +13,9 @@ sealed class Question: IQuestion {
                     override val isOptional: Boolean = false,
                     val minLength: Int = 0,
                     val maxLength: Int = Int.MAX_VALUE,
-                    var input: String = ""): Question() {
+                    var input: String? = ""): Question() {
 
-        override fun getAnswer() = Answer.TextAnswer(input)
+        override fun getAnswer() = Answer.TextAnswer(input ?: "")
     }
 
     data class Numeric(override val id: String,
