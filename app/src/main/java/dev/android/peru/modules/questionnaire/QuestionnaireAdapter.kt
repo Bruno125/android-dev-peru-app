@@ -55,7 +55,8 @@ class QuestionnaireAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         return when(type) {
             RowTypes.Text -> TextQuestionViewHolder.newInstance(parent)
             RowTypes.Numeric -> NumericQuestionViewHolder.newInstance(parent)
-            RowTypes.SelectableChoice -> SelectableChoiceViewHolder.newInstance(parent)
+            RowTypes.SelectableChoice -> SelectableChoiceViewHolder.newInstance(
+                    parent, onSelected = { notifyDataSetChanged() })
         }
     }
 
@@ -113,11 +114,12 @@ class QuestionnaireAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    private class SelectableChoiceViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    private class SelectableChoiceViewHolder(val onSelected: (Choice)->Unit,
+                                             itemView: View): RecyclerView.ViewHolder(itemView) {
         companion object {
-            fun newInstance(parent: ViewGroup): SelectableChoiceViewHolder {
+            fun newInstance(parent: ViewGroup, onSelected: (Choice)->Unit): SelectableChoiceViewHolder {
                 val view = parent.inflate(R.layout.row_question_choice, attachToRoot = false)
-                return SelectableChoiceViewHolder(view)
+                return SelectableChoiceViewHolder(onSelected, view)
             }
         }
 
@@ -129,8 +131,8 @@ class QuestionnaireAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 labelTextView.text = label
                 selectedImageView.updateVisibility(isSelected)
                 itemView.setOnClickListener {
-                    isSelected = !isSelected
-                    selectedImageView.updateVisibility(isSelected)
+                    question?.update(choice = this)
+                    onSelected(this)
                 }
             }
         }
@@ -140,7 +142,7 @@ class QuestionnaireAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 choices.forEach { it.isSelected = (it.id == choice.id) }
             }
             is Question.MultiChoice -> {
-                choices.find { it.id == choice.id }?.isSelected = choice.isSelected
+                choice.isSelected = !choice.isSelected
             }
             else -> { /* do nothing */ }
         }

@@ -16,6 +16,7 @@ import dev.android.peru.R
 import dev.android.peru.modules.questionnaire.QuestionnaireUiState.*
 import dev.android.peru.provide
 import kotlinx.android.synthetic.main.questionnaire_fragment.*
+import peru.android.dev.androidutils.hideKeyboard
 import peru.android.dev.androidutils.runWithDelay
 import peru.android.dev.androidutils.toast
 import peru.android.dev.baseutils.exhaustive
@@ -93,6 +94,7 @@ class QuestionnaireFragment : Fragment() {
         activity?.title = getString(R.string.question_current_step, currentIndex + 1, totalQuestions)
         stepperFooter.totalSteps = totalQuestions
         stepperFooter.setCurrent(currentIndex, animated = false)
+        view?.hideKeyboard()
     }
 
     private fun beginFinishedAnimations() {

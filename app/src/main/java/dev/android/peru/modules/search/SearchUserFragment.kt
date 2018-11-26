@@ -13,6 +13,7 @@ import dev.android.peru.provide
 import peru.android.dev.baseutils.exhaustive
 import dev.android.peru.modules.search.SearchUserUiState.*
 import kotlinx.android.synthetic.main.search_user_fragment.*
+import peru.android.dev.androidutils.hideKeyboard
 import peru.android.dev.androidutils.toast
 import peru.android.dev.datamodel.Attendance
 
@@ -51,6 +52,7 @@ open class SearchUserFragment : Fragment(), AttendanceAdapter.Callback {
         userSearchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 searchViewModel.search(query ?: "")
+                view?.hideKeyboard()
                 return true
             }
 
