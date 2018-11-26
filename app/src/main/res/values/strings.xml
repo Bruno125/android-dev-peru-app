@@ -12,6 +12,8 @@
     <string name="attendance_unregistered">Desasistencia registrada</string>
 
     <string name="user_has_not_registered">El usuario no ha marcado asistencia. ¿Desea continuar de todas formas?</string>
+    <string name="thanks">¡Gracias!</string>
+    <string name="thanks_for_answering">Gracias por participar en nuestra encuesta!</string>
 
     <string name="common_yes">Si</string>
     <string name="common_no">No</string>

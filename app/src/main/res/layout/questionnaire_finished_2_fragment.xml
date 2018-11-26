@@ -12,8 +12,7 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:minHeight="?attr/actionBarSize"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:navigationIcon="@drawable/ic_close_white_24dp"/>
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <View
         android:id="@+id/view"
@@ -37,8 +36,8 @@
         android:layout_height="0dp"
         android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/finishedTextView"
+    <LinearLayout
+        android:id="@+id/finishContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="visible"
@@ -46,10 +45,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textColor="#fff"
-        android:textSize="24sp"
-        android:text="Gracias!" />
+        app:layout_constraintTop_toTopOf="parent">
+        <include layout="@layout/questionnaire_finished_content"/>
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/questionRecyclerView"
