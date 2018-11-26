@@ -1,21 +1,24 @@
 package dev.android.peru.modules.questionnaire
 
-import androidx.lifecycle.ViewModelProviders
+import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import dev.android.peru.modules.questionnaire.QuestionnaireUiState.*
-
 import dev.android.peru.R
+import dev.android.peru.modules.questionnaire.QuestionnaireUiState.*
 import dev.android.peru.provide
 import kotlinx.android.synthetic.main.questionnaire_fragment.*
 import peru.android.dev.androidutils.toast
 import peru.android.dev.baseutils.exhaustive
 
 class QuestionnaireFragment : Fragment() {
+
+    interface Owner {
+        fun closeQuestionnaire()
+    }
 
     companion object {
         private const val PARAM_MEETUP_ID = "PARAM_MEETUP_ID"
@@ -25,6 +28,7 @@ class QuestionnaireFragment : Fragment() {
         }
     }
 
+    private lateinit var owner: Owner
     private lateinit var viewModel: QuestionnaireViewModel
     private val adapter = QuestionnaireAdapter()
 
@@ -61,6 +65,9 @@ class QuestionnaireFragment : Fragment() {
         stepperFooter.onFinishListener = {
             viewModel.onFinishedClicked()
         }
+        questionnaireToolbar.setNavigationOnClickListener {
+            owner.closeQuestionnaire()
+        }
     }
 
     private fun render(state: QuestionnaireUiState) {
@@ -81,5 +88,10 @@ class QuestionnaireFragment : Fragment() {
         activity?.title = getString(R.string.question_current_step, currentIndex + 1, totalQuestions)
         stepperFooter.totalSteps = totalQuestions
         stepperFooter.setCurrent(currentIndex, animated = false)
+    }
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        owner = context as? Owner ?: throw RuntimeException("$context must implement QuestionnaireFragment.Owner")
     }
 }

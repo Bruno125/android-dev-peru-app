@@ -6,13 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".modules.questionnaire.QuestionnaireFragment">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/questionnaireToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:navigationIcon="@drawable/ic_close_white_24dp"/>
+
     <View
         android:id="@+id/view"
         android:layout_width="0dp"
         android:layout_height="120dp"
         android:background="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/questionnaireToolbar" />
 
     <peru.android.dev.androidutils.widgets.StepperFooter
         android:id="@+id/stepperFooter"
