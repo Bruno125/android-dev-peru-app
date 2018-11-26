@@ -2,7 +2,7 @@ package dev.android.peru.modules.search
 
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import dev.android.peru.R
 import kotlinx.android.synthetic.main.row_attendance.view.*
@@ -10,14 +10,14 @@ import peru.android.dev.androidutils.inflate
 import peru.android.dev.datamodel.Attendance
 import kotlin.properties.Delegates
 
-class AttendanceAdapter: RecyclerView.Adapter<AttendanceAdapter.ViewHolder>() {
+class AttendanceAdapter(val callback: Callback): RecyclerView.Adapter<AttendanceAdapter.ViewHolder>() {
 
     var data: List<Attendance> by Delegates.observable(emptyList()) { _, _, _ ->
         notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder.newInstance(parent)
+        return ViewHolder.newInstance(parent, callback)
     }
 
     override fun getItemCount(): Int {
@@ -28,12 +28,12 @@ class AttendanceAdapter: RecyclerView.Adapter<AttendanceAdapter.ViewHolder>() {
         holder.bind(data[position])
     }
 
-    class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View, val callback: Callback): RecyclerView.ViewHolder(itemView) {
 
         companion object {
-            fun newInstance(parent: ViewGroup): ViewHolder {
+            fun newInstance(parent: ViewGroup, callback: Callback): ViewHolder {
                 val view = parent.inflate(R.layout.row_attendance, attachToRoot = false)
-                return ViewHolder(view)
+                return ViewHolder(view, callback)
             }
         }
 
@@ -41,10 +41,19 @@ class AttendanceAdapter: RecyclerView.Adapter<AttendanceAdapter.ViewHolder>() {
             itemView.attendanceIdTextView.text = attendance.id
             itemView.attendanceNameTextView.text = attendance.name
 
+            val color = ContextCompat.getColor(itemView.context, when {
+                attendance.didShowUp -> R.color.colorPrimary
+                else -> R.color.textColor
+            })
+            itemView.attendanceIdTextView.setTextColor(color)
+
             itemView.setOnClickListener {
-                Toast.makeText(itemView.context, "Clicked: $attendance", Toast.LENGTH_SHORT).show()
+                callback.onAttendanceSelected(attendance)
             }
         }
     }
 
+    interface Callback {
+        fun onAttendanceSelected(attendance: Attendance)
+    }
 }

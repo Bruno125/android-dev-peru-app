@@ -5,4 +5,16 @@
     <string name="error_saving_response">Ocurrió un error al guardar tus respuestas.</string>
     <string name="error_searching_user">Usuario no encontrado</string>
 
+    <string name="start_questionnaire">Iniciar encuesta</string>
+    <string name="start_attendance">Marcar asistencia</string>
+
+    <string name="attendance_registered">Asistencia registrada</string>
+    <string name="attendance_unregistered">Desasistencia registrada</string>
+
+    <string name="user_has_not_registered">El usuario no ha marcado asistencia. ¿Desea continuar de todas formas?</string>
+
+    <string name="common_yes">Si</string>
+    <string name="common_no">No</string>
+    <string name="common_cancel">Cancelar</string>
+
 </resources>

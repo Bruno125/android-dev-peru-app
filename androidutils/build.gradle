@@ -38,6 +38,7 @@ dependencies {
     implementation lib.coroutines_android
     implementation lib.kotlin
     implementation lib.constraint_layout
+    implementation lib.picasso
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
 }
 repositories {

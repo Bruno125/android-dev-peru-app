@@ -5,8 +5,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import dev.android.peru.modules.meetup.detail.MeetupDetailViewModel
 import dev.android.peru.modules.questionnaire.QuestionnaireViewModel
 import dev.android.peru.modules.search.SearchUserViewModel
+import dev.android.peru.modules.meetup.markAttendance.MarkAttendanceViewModel
+import dev.android.peru.modules.questionnaire.pickUser.PickQuestionnaireUserViewModel
 
 
 object ViewModelInjection: ViewModelProvider.Factory {
@@ -17,6 +20,12 @@ object ViewModelInjection: ViewModelProvider.Factory {
             QuestionnaireViewModel() as T
         } else if (modelClass.assignableFrom<SearchUserViewModel>()) {
             SearchUserViewModel() as T
+        } else if (modelClass.assignableFrom<MeetupDetailViewModel>()) {
+            MeetupDetailViewModel() as T
+        } else if (modelClass.assignableFrom<MarkAttendanceViewModel>()) {
+            MarkAttendanceViewModel() as T
+        } else if (modelClass.assignableFrom<PickQuestionnaireUserViewModel>()) {
+            PickQuestionnaireUserViewModel() as T
         } else {
             throw RuntimeException("Unsupported ViewModel")
         }

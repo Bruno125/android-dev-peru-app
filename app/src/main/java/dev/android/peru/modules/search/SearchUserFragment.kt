@@ -1,6 +1,5 @@
 package dev.android.peru.modules.search
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,45 +14,49 @@ import peru.android.dev.baseutils.exhaustive
 import dev.android.peru.modules.search.SearchUserUiState.*
 import kotlinx.android.synthetic.main.search_user_fragment.*
 import peru.android.dev.androidutils.toast
+import peru.android.dev.datamodel.Attendance
 
-class SearchUserFragment : Fragment() {
+open class SearchUserFragment : Fragment(), AttendanceAdapter.Callback {
 
     companion object {
-        fun newInstance() = SearchUserFragment()
+        const val PARAM_MEETUP_ID = "PARAM_MEETUP_ID"
     }
 
-    private val adapter = AttendanceAdapter()
-    private lateinit var viewModel: SearchUserViewModel
+    protected val adapter = AttendanceAdapter(this)
+    protected lateinit var searchViewModel: SearchUserViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.search_user_fragment, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = provide()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        searchViewModel = provide()
         loadMeetup()
         bind()
+    }
+
+    override fun onAttendanceSelected(attendance: Attendance) {
+        // do nothing by default
     }
 
     private fun bind() {
         attendanceRecyclerView.adapter = adapter
 
-        viewModel.state.observe(this, Observer { state ->
+        searchViewModel.state.observe(this, Observer { state ->
             state?.let { render(it) }
         })
 
         userSearchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                viewModel.search(query ?: "")
+                searchViewModel.search(query ?: "")
                 return true
             }
 
             override fun onQueryTextChange(p0: String?): Boolean {
                 return true
             }
-
         })
     }
 
@@ -81,7 +84,11 @@ class SearchUserFragment : Fragment() {
     }
 
     private fun loadMeetup() {
-        val meetupId = "wzJ9vGOmfO1vUDDs9qi6"
-        viewModel.loadMeetup(meetupId)
+        val meetupId = getMeetupId()
+        searchViewModel.loadMeetup(meetupId)
+    }
+
+    protected fun getMeetupId(): String {
+        return arguments?.getString(PARAM_MEETUP_ID) ?: ""
     }
 }

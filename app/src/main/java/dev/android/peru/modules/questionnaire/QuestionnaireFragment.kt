@@ -18,7 +18,11 @@ import peru.android.dev.baseutils.exhaustive
 class QuestionnaireFragment : Fragment() {
 
     companion object {
-        fun newInstance() = QuestionnaireFragment()
+        private const val PARAM_MEETUP_ID = "PARAM_MEETUP_ID"
+
+        fun newInstance(meetupId: String) = QuestionnaireFragment().apply {
+            arguments = Bundle().apply { putString(PARAM_MEETUP_ID, meetupId) }
+        }
     }
 
     private lateinit var viewModel: QuestionnaireViewModel
@@ -32,11 +36,12 @@ class QuestionnaireFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = provide()
+        viewModel.loadQuestionnaire(getMeetupId())
         bind()
+
     }
 
     private fun bind() {
-        lifecycle.addObserver(viewModel)
         questionRecyclerView.adapter = adapter
 
         viewModel.state.observe(this, Observer { state ->
@@ -64,6 +69,10 @@ class QuestionnaireFragment : Fragment() {
             is InProgress -> { displayCurrent(state) }
             is Finished -> {  }
         }.exhaustive
+    }
+
+    protected fun getMeetupId(): String {
+        return arguments?.getString(PARAM_MEETUP_ID) ?: ""
     }
 
     private fun displayCurrent(state: InProgress) = with(state) {
