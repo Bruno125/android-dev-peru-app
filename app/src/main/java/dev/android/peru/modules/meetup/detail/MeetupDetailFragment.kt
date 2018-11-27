@@ -60,6 +60,7 @@ class MeetupDetailFragment : Fragment() {
     }
 
     private fun display(meetup: Meetup) {
+        meetupDetailToolbar.title = meetup.name
         meetupTitleTextView.text = meetup.name
         meetupDescriptionTextView.setHtml(meetup.description)
         meetupCoverImageView.load(meetup.cover)
