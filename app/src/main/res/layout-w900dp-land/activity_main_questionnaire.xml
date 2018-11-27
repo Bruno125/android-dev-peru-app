@@ -8,17 +8,23 @@
     android:orientation="vertical"
     tools:ignore="MissingDefaultResource">
 
+
+    <FrameLayout
+        android:id="@+id/coverFrameLayout"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
     <FrameLayout
         android:id="@+id/leftFrameLayout"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:visibility="gone"
-        app:layout_constraintEnd_toStartOf="@+id/centerFrameLayout"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:visibility="gone" />
 
     <View
         android:id="@+id/leftCenterSeparator"
         style="@style/VerticalViewSeparator"
+        android:visibility="gone"
         app:layout_constraintStart_toEndOf="@id/leftFrameLayout"/>
 
     <FrameLayout

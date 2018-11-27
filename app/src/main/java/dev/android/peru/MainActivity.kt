@@ -14,6 +14,7 @@ import dev.android.peru.modules.meetup.markAttendance.MarkAttendanceFragment
 import dev.android.peru.modules.questionnaire.QuestionnaireFragment
 import dev.android.peru.modules.questionnaire.pickUser.PickQuestionnaireUserActivity
 import dev.android.peru.modules.questionnaire.pickUser.PickQuestionnaireUserFragment
+import dev.android.peru.modules.search.SearchUserFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(),
@@ -42,8 +43,7 @@ class MainActivity : AppCompatActivity(),
 
     override fun openMarkAttendance(meetupId: String) {
         if(isMasterDetail){
-            val fragment = MarkAttendanceFragment.newInstance(meetupId)
-            centerFrameLayout?.replace(fragment)
+            openSearchFragment(MarkAttendanceFragment.newInstance(meetupId))
         } else {
             MarkAttendanceActivity.start(this, meetupId)
         }
@@ -51,8 +51,7 @@ class MainActivity : AppCompatActivity(),
 
     override fun openRequestFeedback(meetupId: String) {
         if(isMasterDetail) {
-            val fragment = PickQuestionnaireUserFragment.newInstance(meetupId)
-            centerFrameLayout?.replace(fragment)
+            openSearchFragment(PickQuestionnaireUserFragment.newInstance(meetupId))
         } else {
             PickQuestionnaireUserActivity.start(this, meetupId)
         }
@@ -70,11 +69,16 @@ class MainActivity : AppCompatActivity(),
 
     override fun closeQuestionnaire() {
         if(isMasterDetail) {
-            mainConstraintLayout?.transition(R.layout.activity_main)
+            mainConstraintLayout?.transition(R.layout.activity_main_search)
             rightFrameLayout?.removeAllViews()
         } else {
             goBack()
         }
+    }
+
+    private fun openSearchFragment(fragment: SearchUserFragment) {
+        centerFrameLayout?.replace(fragment)
+        mainConstraintLayout?.transition(R.layout.activity_main_search)
     }
 
     private fun ConstraintLayout.transition(layoutId: Int) {
