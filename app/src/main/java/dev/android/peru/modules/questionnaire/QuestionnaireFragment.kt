@@ -16,6 +16,7 @@ import dev.android.peru.R
 import dev.android.peru.modules.questionnaire.QuestionnaireUiState.*
 import dev.android.peru.provide
 import kotlinx.android.synthetic.main.questionnaire_fragment.*
+import peru.android.dev.androidutils.reversedCenteredCircularReveal
 import peru.android.dev.androidutils.runWithDelay
 import peru.android.dev.androidutils.toast
 import peru.android.dev.baseutils.exhaustive
@@ -97,10 +98,13 @@ class QuestionnaireFragment : Fragment() {
 
     private fun beginFinishedAnimations() {
         with(questionnaireConstraintLayout) {
-            transitionTo(layoutId = R.layout.questionnaire_finished_1_fragment, onFinished = {
-                transitionTo(layoutId = R.layout.questionnaire_finished_2_fragment, onFinished = {
-                    runWithDelay(1000L) { owner.closeQuestionnaire() }
-                })
+            transitionTo(layoutId = R.layout.questionnaire_finished_fragment, onFinished = {
+                runWithDelay(1500L) {
+                    finishContent.reversedCenteredCircularReveal(duration = 1500, onAnimationEnd = {
+                        finishContent.removeAllViews()
+                        owner.closeQuestionnaire()
+                    })
+                }
             })
         }
     }
