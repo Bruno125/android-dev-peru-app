@@ -16,7 +16,7 @@
         app:navigationIcon="@drawable/ic_close_white_24dp" />
 
     <View
-        android:id="@+id/view"
+        android:id="@+id/questionnaireBackgroundView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/colorPrimary"
@@ -43,12 +43,11 @@
         android:layout_height="0dp"
         android:visibility="gone" />
 
-
     <LinearLayout
         android:id="@+id/finishContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
